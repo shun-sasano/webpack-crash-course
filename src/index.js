@@ -2,7 +2,7 @@ import _ from 'lodash';
 // import style from './style.css';
 // console.log(style.toString());
 import './style.css'; // importしてるcssをcss-loaderがバンドルしてくれる
-
+import './style.scss'; // importしてるcssをsass-loaderがバンドルしてくれる
 import logo from './logo.png'
 import minilogo from './minilogo.png'
 
