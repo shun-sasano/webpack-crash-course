@@ -1,4 +1,7 @@
 import _ from 'lodash'; 
+// import style from './style.css';
+// console.log(style.toString());
+import './style.css'; // importしてるcssをcss-loaderがバンドルしてくれる
 
 // 関数のimportは{}でかこう。
 // import { NAME, NiJou } from './utilities' // .jsは省略可能
@@ -21,3 +24,4 @@ function component() {
 }
 
 document.body.appendChild(component());
+document.body.classList.add('haikei');

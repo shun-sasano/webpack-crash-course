@@ -7,6 +7,18 @@ module.exports = {
     filename: 'main.js',
     path: outputPath
   },
+  module: {
+    rules: [
+      { 
+        test: /\.css$/,
+        use: [// この順番超大事！！！
+          // ここは後ろから読み込む。css-loader => style-loaderの順番。
+          'style-loader', // バンドルしたcssを読み込む
+          'css-loader' // cssをバンドルする
+        ]
+      }
+    ]
+  },
   devServer: { // ドキュメントルートの設定。
     contentBase: outputPath
   }
