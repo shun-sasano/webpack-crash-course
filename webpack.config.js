@@ -19,7 +19,10 @@ module.exports = {
       },
       {
         test: /\.(jpe?g|gif|png|svg|ico)$/i,
-        loader: 'url-loader',
+        loader: 'url-loader', //　Q.ここはurl-loaderのままでもfile-loaderが動くのか？？
+        // A. 動く。optionsを指定することでfile-loaderが動作するようだ。limitで指定した約2kb以上の場合は
+        // file-loaderが動作して、それ以下の場合はurl-loaderが動作する。
+        // 逆にloaderにfile-loaderを指定した場合はlimitが無視されてどんな場合でもfile-loaderが動く。
         options: {
           limit: 2048, // images配下に画像があるみたいになる
           name: './images/[name].[ext]'

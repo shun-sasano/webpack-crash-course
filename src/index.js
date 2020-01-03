@@ -4,6 +4,7 @@ import _ from 'lodash';
 import './style.css'; // importしてるcssをcss-loaderがバンドルしてくれる
 
 import logo from './logo.png'
+import minilogo from './minilogo.png'
 
 // 関数のimportは{}でかこう。
 // import { NAME, NiJou } from './utilities' // .jsは省略可能
@@ -28,6 +29,10 @@ function component() {
 document.body.appendChild(component());
 document.body.classList.add('haikei');
 
-const image = new Image()
-image.src = logo
-document.body.appendChild(image)
+const image1 = new Image()
+image1.src = logo
+document.body.appendChild(image1)
+
+const image2 = new Image()
+image2.src = minilogo
+document.body.appendChild(image2)
