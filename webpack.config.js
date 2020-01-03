@@ -17,6 +17,15 @@ module.exports = {
           'css-loader' // cssをバンドルする
         ]
       },
+      { 
+        test: /\.scss$/,
+        use: [// この順番超大事！！！
+          // ここは後ろから読み込む。css-loader => style-loaderの順番。
+          'style-loader', // バンドルしたcssを読み込む
+          'css-loader', // cssをバンドルする
+          'sass-loader' // scssをバンドルする(その後node-sassによってcssにトランスパイルされる)
+        ]
+      },
       {
         test: /\.(jpe?g|gif|png|svg|ico)$/i,
         loader: 'url-loader', //　Q.ここはurl-loaderのままでもfile-loaderが動くのか？？
