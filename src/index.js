@@ -3,6 +3,8 @@ import _ from 'lodash';
 // console.log(style.toString());
 import './style.css'; // importしてるcssをcss-loaderがバンドルしてくれる
 
+import logo from './logo.png'
+
 // 関数のimportは{}でかこう。
 // import { NAME, NiJou } from './utilities' // .jsは省略可能
 // console.log(NiJou(22));
@@ -25,3 +27,7 @@ function component() {
 
 document.body.appendChild(component());
 document.body.classList.add('haikei');
+
+const image = new Image()
+image.src = logo
+document.body.appendChild(image)

@@ -16,6 +16,14 @@ module.exports = {
           'style-loader', // バンドルしたcssを読み込む
           'css-loader' // cssをバンドルする
         ]
+      },
+      {
+        test: /\.(jpe?g|gif|png|svg|ico)$/i,
+        loader: 'url-loader',
+        options: {
+          limit: 2048, // images配下に画像があるみたいになる
+          name: './images/[name].[ext]'
+        },
       }
     ]
   },
