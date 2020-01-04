@@ -1,5 +1,7 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCssEtractPlugin = require('mini-css-extract-plugin')
+
 const outputPath = path.resolve(__dirname, 'dist')
 console.log({outputPath})
 module.exports = {
@@ -15,19 +17,21 @@ module.exports = {
         exclude: /node_modules/, 
         loader: "babel-loader" 
       },
+      // { 
+      //   test: /\.css$/,
+      //   use: [// この順番超大事！！！
+      //     // ここは後ろから読み込む。css-loader => style-loaderの順番。
+      //     // 'style-loader', // バンドルしたcssを読み込む
+      //     MiniCssEtractPlugin.loader, // style-loaerの違いは別のcssファイルが作成されるところ。
+      //     'css-loader' // cssをバンドルする
+      //   ]
+      // },
       { 
-        test: /\.css$/,
+        test: /\.(sc|c)ss$/, //  /\.s?css$/じゃダメなのか？？
         use: [// この順番超大事！！！
           // ここは後ろから読み込む。css-loader => style-loaderの順番。
-          'style-loader', // バンドルしたcssを読み込む
-          'css-loader' // cssをバンドルする
-        ]
-      },
-      { 
-        test: /\.scss$/,
-        use: [// この順番超大事！！！
-          // ここは後ろから読み込む。css-loader => style-loaderの順番。
-          'style-loader', // バンドルしたcssを読み込む
+          // 'style-loader', // バンドルしたcssを読み込む
+          MiniCssEtractPlugin.loader, // style-loaerの違いは別のcssファイルが作成されるところ。
           'css-loader', // cssをバンドルする
           'sass-loader' // scssをバンドルする(その後node-sassによってcssにトランスパイルされる)(sass-loaderが依存しているので必要。)
         ]
@@ -56,6 +60,10 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './src/index.html',
       file: './index.html'
+    }),
+    new MiniCssEtractPlugin({ 
+      // proxyによってキャッシュされて変更が更新されない可能性があるのでhashを入れてファイル名をいちいち変更することで回避している。
+      filename: '[name].[hash].css'
     })
   ]
 }
