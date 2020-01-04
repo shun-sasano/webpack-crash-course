@@ -1,4 +1,5 @@
 const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const outputPath = path.resolve(__dirname, 'dist')
 console.log({outputPath})
 module.exports = {
@@ -9,6 +10,11 @@ module.exports = {
   },
   module: {
     rules: [
+      { 
+        test: /\.jsx?$/, 
+        exclude: /node_modules/, 
+        loader: "babel-loader" 
+      },
       { 
         test: /\.css$/,
         use: [// この順番超大事！！！
@@ -23,7 +29,7 @@ module.exports = {
           // ここは後ろから読み込む。css-loader => style-loaderの順番。
           'style-loader', // バンドルしたcssを読み込む
           'css-loader', // cssをバンドルする
-          'sass-loader' // scssをバンドルする(その後node-sassによってcssにトランスパイルされる)
+          'sass-loader' // scssをバンドルする(その後node-sassによってcssにトランスパイルされる)(sass-loaderが依存しているので必要。)
         ]
       },
       {
@@ -36,10 +42,20 @@ module.exports = {
           limit: 2048, // images配下に画像があるみたいになる
           name: './images/[name].[ext]'
         },
+      },
+      {
+        test: '/\.html$/',
+        loader: 'html-loader'
       }
     ]
   },
-  devServer: { // ドキュメントルートの設定。
-    contentBase: outputPath
-  }
+  // devServer: { // ドキュメントルートの設定。reactが導入されるとpluginsの設定に上書きされて意味がなくなる？？
+  //   contentBase: outputPath
+  // },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './src/index.html',
+      file: './index.html'
+    })
+  ]
 }
