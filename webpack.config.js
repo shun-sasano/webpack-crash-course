@@ -5,7 +5,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 const outputPath = path.resolve(__dirname, 'dist')
-console.log({outputPath})
+// console.log({outputPath})
 module.exports = {
   entry: './src/index.js', // バンドル対象の設定
   output: { // バンドル結果のjsファイルの名前とファイルの設置場所の設定
@@ -14,6 +14,14 @@ module.exports = {
   },
   module: {
     rules: [
+      {// 一番上に記述するということは一番最後に実行されることになるが、
+        // babel-loader等で形を変更された後では無く、自分が書いた状態のものをlinkして欲しいので
+        // もっと早めに実行させる必要がある。
+        enforce: "pre", // enforce：preを持たないloaderよりも早く実行されるので順番をあまり気にしなくて良くなる。
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        loader: 'eslint-loader',
+      },
       { 
         test: /\.jsx?$/, 
         exclude: /node_modules/, 
@@ -40,7 +48,7 @@ module.exports = {
       },
       {
         test: /\.(jpe?g|gif|png|svg|ico)$/i,
-        loader: 'url-loader', //　Q.ここはurl-loaderのままでもfile-loaderが動くのか？？
+        loader: 'url-loader', // Q.ここはurl-loaderのままでもfile-loaderが動くのか？？
         // A. 動く。optionsを指定することでfile-loaderが動作するようだ。limitで指定した約2kb以上の場合は
         // file-loaderが動作して、それ以下の場合はurl-loaderが動作する。
         // 逆にloaderにfile-loaderを指定した場合はlimitが無視されてどんな場合でもfile-loaderが動く。
@@ -50,7 +58,7 @@ module.exports = {
         },
       },
       {
-        test: '/\.html$/',
+        test: /\.html$/,
         loader: 'html-loader'
       }
     ]
