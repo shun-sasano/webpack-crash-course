@@ -1,6 +1,7 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssEtractPlugin = require('mini-css-extract-plugin')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 const outputPath = path.resolve(__dirname, 'dist')
 console.log({outputPath})
@@ -65,5 +66,14 @@ module.exports = {
       // proxyによってキャッシュされて変更が更新されない可能性があるのでhashを入れてファイル名をいちいち変更することで回避している。
       filename: '[name].[hash].css'
     })
-  ]
+  ],
+  optimization: {
+    minimizer: [new UglifyJsPlugin({
+      uglifyOptions: {
+        compress: {
+          drop_console: true
+        }
+      }
+    })],
+  },
 }
