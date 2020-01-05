@@ -43,6 +43,9 @@ import './style.css'
 import './style.scss'
 
 console.log('I am Printing Log')
+
+alert("Hi!!!!! po!!")
+
 ReactDom.render(
   <div>Hello React!</div>,
   document.getElementById('root')
